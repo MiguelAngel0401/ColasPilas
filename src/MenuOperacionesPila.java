@@ -1,104 +1,127 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
 
 public class MenuOperacionesPila {
+    public static LinkedList<Integer> pila;
     public static BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
-    public static Pila<Integer> pila = new Pila<>();
+    public static String entrada;
 
-    public static void main(String[] args) throws IOException {
-        int opcion;
-        do {
-            mostrarMenu();
-            opcion = Integer.parseInt(buffer.readLine());
-
-            switch (opcion) {
-                case 1:
-                    agregarPila();
-                    break;
-                case 3:
-                    verTopPila();
-                    break;
-                case 4:
-                    verificarPilaVacia();
-                    break;
-                case 5:
-                    tamañoPila();
-                    break;
-                case 6:
-                    imprimirPila();
-                    break;
-                case 7:
-                    System.out.println("Saliendo del programa...");
-                    break;
-                default:
-                    System.out.println("Opción no válida");
-                    break;
-            }
-
-        } while (opcion != 7);
+    public static void crearPila() {
+        pila = new LinkedList<>();
+        System.out.println("Pila creada correctamente.");
     }
 
-    public static void mostrarMenu() {
-        System.out.println("Elegir una opción:");
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        System.out.println("1. Agregar elemento a la Pila");
-        System.out.println("3. Ver elemento superior de la Pila");
-        System.out.println("4. Verificar si la Pila está vacía");
-        System.out.println("5. Tamaño de la Pila");
-        System.out.println("6. Imprimir contenido de la Pila");
-        System.out.println("7. Salir");
+    public static void apilar() throws IOException {
+        int valor;
+        System.out.println("Escribe el valor a insertar: ");
+        entrada = buffer.readLine();
+        valor = Integer.parseInt(entrada);
+        pila.push(valor);
+        System.out.println("Elemento apilado correctamente.");
     }
 
-    public static void agregarPila() throws IOException {
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-        System.out.println("Ingresar valor a la pila:");
-        String input = buffer.readLine();
-        int valor = Integer.parseInt(input);
-        pila.crear(valor);
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-        System.out.println("Valor agregado a la pila.");
-    }
-
-    public static void verTopPila() {
-        Integer valor = pila.top();
-        if (valor != null) {
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-            System.out.println("Dato superior de la pila: " + valor);
+    public static void desapilar() {
+        if (!pila.isEmpty()) {
+            int valorEliminar = pila.pop();
+            System.out.println("Elemento desapilado: " + valorEliminar);
         } else {
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-            System.out.println("La pila está vacía.");
+            System.out.println("La pila está vacía, no se puede desapilar.");
         }
     }
 
-    public static void verificarPilaVacia() {
-        if (pila.empty()) {
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    public static void imprimirPila() {
+        System.out.println("----------------------------------");
+        System.out.println("Contenido de la pila:");
+        for (int valor : pila) {
+            System.out.println(valor);
+        }
+        System.out.println("----------------------------------");
+    }
+
+    public static void obtenerTamano() {
+        System.out.println("Tamaño de la pila: " + pila.size());
+    }
+
+    public static void leerUltimo() {
+        if (!pila.isEmpty()) {
+            System.out.println("Último elemento de la pila: " + pila.peek());
+        } else {
+            System.out.println("La pila está vacía, no hay elementos para leer.");
+        }
+    }
+
+    public static void estaVacia() {
+        if (pila.isEmpty()) {
             System.out.println("La pila está vacía.");
         } else {
             System.out.println("La pila no está vacía.");
         }
     }
 
-    public static void tamañoPila() {
-        int tamaño = pila.size();
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-        System.out.println("Tamaño de la pila: " + tamaño);
-    }
+    public static void main(String[] args) throws IOException {
+        int opcion;
+        System.out.println("Programa pila");
+        crearPila();
 
-    public static void imprimirPila() {
-        if (pila.empty()) {
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-            System.out.println("La pila está vacía.");
-        } else {
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-            System.out.println("Contenido de la Pila:");
-            for (Integer valor : pila) {
-                System.out.println(valor);
+        do {
+            System.out.println("1. Agregar elemento a la pila");
+            System.out.println("2. Desapilar elemento");
+            System.out.println("3. Imprimir la pila");
+            System.out.println("4. Obtener tamaño de la pila");
+            System.out.println("5. Leer último elemento");
+            System.out.println("6. Verificar si la pila está vacía");
+            System.out.println("7. Crear nueva pila");
+            System.out.println("8. Salir");
+            System.out.println("Escriba opción");
+            entrada = buffer.readLine();
+            opcion = Integer.parseInt(entrada);
+
+            switch (opcion) {
+                case 1:
+                    apilar();
+                    break;
+
+                case 2:
+                    desapilar();
+                    break;
+
+                case 3:
+                    imprimirPila();
+                    break;
+
+                case 4:
+                    obtenerTamano();
+                    break;
+
+                case 5:
+                    leerUltimo();
+                    break;
+
+                case 6:
+                    estaVacia();
+                    break;
+
+                case 7:
+                    crearPila();
+                    break;
+
+                case 8:
+                    System.out.println("Terminando el programa");
+                    System.out.println("Adiós");
+                    System.exit(0);
+
+                default:
+                    System.out.println("Opción no válida");
+                    break;
             }
-        }
+
+        } while (opcion != 8);
     }
 }
+
+
 
 
 
